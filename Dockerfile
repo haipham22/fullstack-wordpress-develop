@@ -13,6 +13,7 @@ WORKDIR /app
 # https://github.com/mlocati/docker-php-extension-installer
 # Install packages and remove default server definition
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=wordpress:cli /usr/local/bin/wp /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     sync && \
