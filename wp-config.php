@@ -18,13 +18,6 @@
  * @package WordPress
 */
 
-if (!function_exists('getenv_docker')) {
-function getenv_docker($env, $default) {
-	$value = getenv($env);
-	return $value !== false ? $value : $default;
-}
-}
-
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', !!getenv_docker('DB_NAME', 'wordpress') );
