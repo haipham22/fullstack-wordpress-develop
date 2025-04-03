@@ -1,0 +1,9 @@
+path: /app
+url: http://localhost
+
+
+# Cấu hình Redis Cache cho WP-CLI
+# redis:
+#   host: redis
+#   port: 6379
+#   database: 0

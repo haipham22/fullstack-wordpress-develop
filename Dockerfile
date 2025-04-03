@@ -11,6 +11,8 @@ COPY docker/php/php.ini /usr/local/etc/php/conf.d/custom.ini
 # Configure nginx - http
 COPY docker/nginx /etc/nginx/conf.d/
 
+COPY wp-cli.yml /app/wp-cli.yml
+
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
