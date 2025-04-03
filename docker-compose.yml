@@ -1,11 +1,21 @@
-version: "3"
+x-wordpress_tpl: &wordpress_tpl
+  volumes:
+    - .:/app
+    - ./docker/custom.ini:/usr/local/etc/php/conf.d/custom.ini
 
 services:
   wordpress:
+    <<: *wordpress_tpl
     build: .
     ports:
       - "8443:8080"
-    volumes:
-      - .:/app
-      - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
-
+  init_wordpress:
+    <<: *wordpress_tpl
+    image: wordpress:cli
+    command: >
+      /bin/sh -c '
+      sleep 10;
+      wp core install --path="/app" --url="http://localhost:8000" 
+      '
+    depends_on:
+      - wordpress
