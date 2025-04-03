@@ -1,6 +1,4 @@
 x-wordpress_tpl: &wordpress_tpl
-  env_file:
-    - .env
   volumes:
     - .:/app
     - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
