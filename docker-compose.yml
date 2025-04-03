@@ -6,16 +6,17 @@ x-wordpress_tpl: &wordpress_tpl
 services:
   wordpress:
     <<: *wordpress_tpl
+    container_name: nginx-php-fpm-wordpress
     build: .
     ports:
       - "8443:8080"
   init_wordpress:
     <<: *wordpress_tpl
-    image: wordpress:cli
-    command: >
-      /bin/sh -c '
-      sleep 10;
-      wp core download
-      '
+    build: .
+    entrypoint: [
+      "/bin/sh",
+      "-c",
+      "sleep 10; /entrypoint.sh"
+    ]
     depends_on:
       - wordpress
