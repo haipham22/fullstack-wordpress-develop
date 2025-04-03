@@ -15,7 +15,7 @@ services:
     command: >
       /bin/sh -c '
       sleep 10;
-      wp core install --path="/app" --url="http://localhost:8000" 
+      wp core download
       '
     depends_on:
       - wordpress
