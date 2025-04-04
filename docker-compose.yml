@@ -1,22 +1,11 @@
-x-wordpress_tpl: &wordpress_tpl
-  volumes:
-    - .:/app
-    - ./docker/php/php-config.d/php.ini:/usr/local/etc/php/conf.d/custom.ini
+volumes:
+  app_storage:
 
 services:
-  wordpress:
-    <<: *wordpress_tpl
-    container_name: nginx-php-fpm-wordpress
-    build: .
-    ports:
-      - "8443:8080"
-  init_wordpress:
-    <<: *wordpress_tpl
-    build: .
-    entrypoint: [
-      "/bin/sh",
-      "-c",
-      "sleep 10; /entrypoint.sh"
-    ]
-    depends_on:
-      - wordpress
+  app:
+    image: wordpress:php8.4-fpm
+    volumes:
+      - app_storage:/app/storage
+    
+    env_file:
+      - .env
