@@ -1,0 +1,10 @@
+services:
+  wordpress:
+    image: docker.io/bitpoke/wordpress-runtime:bedrock-php-8.3.14
+    volumes:
+      - ./:/app
+    ports:
+      - "9001:8080"
+    restart: always
+    env_file:
+      - .env
