@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ba091c18460139fb6b588160f030677",
+    "content-hash": "85f492af87aff050f5307901e8383eb0",
     "packages": [
         {
             "name": "composer/installers",
@@ -1019,24 +1019,6 @@
             "time": "2024-07-20T21:52:34+00:00"
         },
         {
-            "name": "wpackagist-theme/air-light",
-            "version": "9.5.0",
-            "source": {
-                "type": "svn",
-                "url": "https://themes.svn.wordpress.org/air-light/",
-                "reference": "9.5.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/air-light.9.5.0.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-theme",
-            "homepage": "https://wordpress.org/themes/air-light/"
-        },
-        {
             "name": "wpackagist-theme/twentytwentyfive",
             "version": "1.2",
             "source": {
@@ -1549,5 +1531,5 @@
         "php": ">=8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
