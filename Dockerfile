@@ -1,4 +1,8 @@
-FROM docker.io/bitpoke/wordpress-runtime:bedrock-php-8.3.14 AS builder
+FROM haipham22/nginx-php-fpm:8.3-fpm-alpine AS builder
+
+RUN install-php-extensions @composer
+
+COPY docker/nginx/conf.d /etc/nginx/conf.d/
 
 COPY composer.json .
 COPY composer.lock .
@@ -13,7 +17,9 @@ RUN composer dump-autoload --no-scripts --no-dev --optimize
 # RUN chown -R www-data:www-data /app
 
 FROM builder AS runtime
-# COPY --from=builder --chown=www-data:www-data /app /app
-COPY --from=builder /app /app
 
-ENV PORT=80
+USER www-data
+
+COPY --from=builder --chown=www-data:www-data /app /app
+
+# COPY --from=builder /app /app
