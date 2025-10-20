@@ -16,3 +16,7 @@ FROM builder AS runtime
 # COPY --from=builder --chown=www-data:www-data /app /app
 COPY --from=builder /app /app
 
+ENV PORT=80
+
+EXPOSE $PORT
+
