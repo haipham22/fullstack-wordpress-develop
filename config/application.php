@@ -148,6 +148,8 @@ ini_set('display_errors', '0');
  */
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
     $_SERVER['HTTPS'] = 'on';
+} else {
+   $_SERVER['HTTPS']='off';
 }
 
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
