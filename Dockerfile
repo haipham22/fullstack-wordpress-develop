@@ -17,6 +17,3 @@ FROM builder AS runtime
 COPY --from=builder /app /app
 
 ENV PORT=80
-
-EXPOSE $PORT
-
