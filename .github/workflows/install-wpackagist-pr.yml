@@ -1,0 +1,78 @@
+name: Install WP Plugin or Theme via WPackagist and Create PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      wp_url:
+        description: 'WordPress.org plugin or theme URL'
+        required: true
+        type: string
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Parse URL
+        id: parse
+        run: |
+          URL="${{ github.event.inputs.wp_url }}"
+          SLUG=$(echo "$URL" | sed -E 's|.*/([^/]+)/?$|\1|')
+
+          if echo "$URL" | grep -q "/plugins/"; then
+            TYPE="plugin"
+            PACKAGE="wpackagist-plugin/$SLUG"
+          elif echo "$URL" | grep -q "/themes/"; then
+            TYPE="theme"
+            PACKAGE="wpackagist-theme/$SLUG"
+          else
+            echo "Invalid URL"
+            exit 1
+          fi
+
+          echo "slug=$SLUG" >> $GITHUB_OUTPUT
+          echo "type=$TYPE" >> $GITHUB_OUTPUT
+          echo "package=$PACKAGE" >> $GITHUB_OUTPUT
+
+      - name: Install package
+        run: |
+          composer config repositories.wpackagist composer https://wpackagist.org
+          composer require ${{ steps.parse.outputs.package }}
+
+      - name: Create branch and commit
+        id: branch
+        run: |
+          BRANCH="add/${{ steps.parse.outputs.slug }}"
+          git checkout -b "$BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add composer.json composer.lock
+          git commit -m "Add ${{ steps.parse.outputs.type }}: ${{ steps.parse.outputs.slug }}"
+          git push origin "$BRANCH"
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.branch.outputs.branch }}
+          base: main
+          title: "Add ${{ steps.parse.outputs.type }}: ${{ steps.parse.outputs.slug }}"
+          body: |
+            URL: ${{ github.event.inputs.wp_url }}
+            Package: `${{ steps.parse.outputs.package }}`
+            Type: ${{ steps.parse.outputs.type }}
+          labels: |
+            dependencies
+            wordpress
