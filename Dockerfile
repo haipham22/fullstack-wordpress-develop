@@ -3,6 +3,7 @@ FROM haipham22/nginx-php-fpm:8.3-fpm-alpine AS builder
 RUN install-php-extensions @composer
 
 COPY docker/nginx/conf.d /etc/nginx/conf.d/
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY composer.json .
 COPY composer.lock .
