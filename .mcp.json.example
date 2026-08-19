@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "visual-layer": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@visual-layer/mcp-server"
+      ]
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    }
+  }
+}
