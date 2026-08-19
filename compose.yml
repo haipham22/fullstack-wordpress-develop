@@ -14,7 +14,7 @@ services:
       - ./:/app
       - ./docker/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     ports:
-      - "8081:8080"
+      - "8080:8080"
     restart: always
     depends_on:
       db:
